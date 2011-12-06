@@ -1,0 +1,50 @@
+
+
+(defun mig ()
+	(sbi (port a) 2)
+	(wait 200)
+	(sbi (port a) 2))
+
+(clear (port a))
+(main-loop 
+	(mig))
+	
+Skutek
+
+clr porta
+main:
+	sbi portA2
+	[kod procedury wait]
+	cbi portA
+	jmp main
+	
+Jednak jeżeli zostanie wykonanie dwukrotnie
+polecenie zostanie wyciągnięte poza
+
+(defun mig ()
+	(sbi (port a) 2)
+	(wait 200)
+	(sbi (port a) 2))
+
+(clear (port a))
+(main-loop 
+	(mig)
+	(sbi (port b) 2)
+	(mig)
+	(cbi (port b) 2))
+
+Dostaniemy
+
+clr porta
+main:
+	rcall mig
+	sbi PROTB2 2
+	rcall mig
+	cbi PROTB2 2
+	jmp main
+
+mig:
+	sbi portA2
+	[kod procedury wait]
+	cbi portA
+	ret

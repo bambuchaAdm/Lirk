@@ -1,0 +1,32 @@
+(import Ports)
+(import Dealy)
+
+(main-loop
+ (move r11 0x11)
+ (move r12 0x12)
+ (move r13 0x13)
+ (xor r11 r11))
+ 
+ powinno wygenerowac
+
+main:
+	load r16, 0x11
+	move r11, r16
+	icr r16
+	move r12, r16
+	icr r16
+	move r13
+	xor r11 r11
+	
+albo na początku
+
+
+main:
+	load r16, 0x11
+	move r11, r16
+	load r16, 0x12
+	move r12, r16
+	load r16, 0x13
+	move r13
+	xor r11 r11
+	
