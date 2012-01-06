@@ -2,29 +2,48 @@
 
 (defparameter *out* T)
 
-(defun mov (to from)
-  (format T "mov ~a, ~a" to from))
-
-(defun add (to from)
-  (format T "add ~a, ~a" to form))
-
-
 (defstruct register
   name)
 
-(defparameter R0 (make-register :name "R1"))
-(defparameter R1 (make-register :name "R2"))
+(defstruct big-register
+  name)
 
-(defgeneric ldi (to from))
+(defstruct label
+  name)
 
-(defmethod ldi ( (to register) (number integer))
-  (format T "ldi ~a, ~d~%" (register-name to) number))
+(defparameter R0 (make-register :name "R0"))
+(defparameter R1 (make-register :name "R1"))
 
-(defmethod sbi ( (reg register) (bit integer) )
-  (format T "sbi ~a, ~a~%" (register-name reg)  bit))
+(defmacro print-mnemonic (name &rest args)
+  `(format *out* "~t ~a ~{~a~^, ~}~%" ,name (list ,@args)))
 
-(defmethod cbi ( (reg register) (bit integer) )
-  (format T "sbi ~a, ~a~%" (register-name reg) bit))
+(defmethod ldi ((to register)(number integer))
+  (print-mnemonic "ldi" (register-name to) number))
 
-#+nil(defun ldi (to number)
-  (format T "ldi ~a, ~a" to number))
+(defmethod ld ((to register)(from big-register))
+  (print-mnemonic "ld" (register-name to) (big-register-name from)))
+
+(defmethod sbi ((reg register)(bit integer))
+  (print-mnemonic "sbi" (register-name reg)  bit))
+
+(defmethod cbi ((reg register)(bit integer))
+  (print-mnemonic "cbi" (register-name reg) bit))
+
+(defun make-asm-label (label)
+  (format *out* "~a : ~%" (label-name label)))
+
+(defmethod jmp ((where label))
+  (print-mnemonic "jmp" (label-name where)))
+
+(defmethod rjmp ((where integer))
+  (print-mnemonic "rjmp" where))
+
+(defmethod rjmp ((where label))
+  (print-mnemonic "rjmp" (label-name where)))
+
+(defmacro main-loop (&body body)
+  (let ((main-label (make-label :name "main")))
+    `(progn
+       (make-asm-label ,main-label)
+       ,@body
+       (rjmp ,main-label))))
