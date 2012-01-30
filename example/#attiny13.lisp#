@@ -1,4 +1,4 @@
-(load "main.lisp")
+2(load "main.lisp")
 
 (include '("tn13def.inc"))
 

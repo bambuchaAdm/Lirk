@@ -1,6 +1,3 @@
-(import Ports)
-(import Dealy)
-
 (main-loop
  (move r11 0x11)
  (move r12 0x12)
@@ -18,7 +15,7 @@ main:
 	move r13
 	xor r11 r11
 	
-albo na poczÄ…tku
+albo na poctku
 
 
 main:
@@ -29,4 +26,29 @@ main:
 	load r16, 0x13
 	move r13
 	xor r11 r11
+
+
+Rejsest stratusu
+
+(enable-global-interupt)
+(disable-global-interupt)
 	
+Trzeba popisa‚æ samle do GPIO
+
+#1 Koncept pierwszy 
+
+Klasa na Pin przechowuj‚±ca offsety w resjestrach
+
+Wada: du‚¿o ró‚¿nych offsetów
+Zaleta: Dok‚³adnie wiadomo co jest potrzebne
+
+#2 Koncept drugi 
+
+Klasa na pin i port 
+Klasa pin pami‚êta tylko loginczy offset
+a klasa port zajmuje si‚ê offsetami i innymi cudami odnio‚¶nie portu
+
+
+SAMPLE
+
+

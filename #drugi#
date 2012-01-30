@@ -48,3 +48,61 @@ mig:
 	[kod procedury wait]
 	cbi portA
 	ret
+
+Proponowane rozwiązanie
+
+(defun czekaj ()
+  (let ((lable-name (gemsym)))
+       (ldi R1 200)
+       (deflabel label-name)
+       (umake-asm-label label-name)
+       (dec R1)
+       (bine label-name)))
+
+(defun zaswiec ()
+       (sbi PORTA 1))
+
+(defun zgas ()
+       (cbi PORTA 1))
+
+(main-loop
+   (zaswiec)
+   (call czekaj)
+   (zgas)
+   (call caekaj))
+
+I skutkiem tego powinno być...
+
+main:  (cbi PORTA 1))
+
+(main-loop
+   (zaswiec)
+   (call czekaj)
+   (zgas)
+   (call caekaj))
+	sbi PORTA,1
+	rcall czeka
+	cbi PORTA,1
+	rcall czeka
+	rjmp main
+
+zeka:
+	ldi R1 200
+G105:
+	dec R1
+	bine G105
+	ret
+
+
+
+
+
+
+
+
+
+
+
+
+
+

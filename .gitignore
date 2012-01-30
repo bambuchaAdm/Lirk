@@ -1,0 +1,7 @@
+*.hex
+*.obj
+*.asm
+*.cof
+*~
+#*
+*.fasl

@@ -78,3 +78,12 @@
        ,@body
        (rjmp ,main-label))))
 
+
+(defun include (args)
+  (format *out* ".nolist~%~{.include \"~a\"~%~}.list~%" args))
+
+(defun code-segment (&optional (org nil) )
+  (format *out* ".cseg~%")
+  (if org
+      (format *out* ".org ~a~%" org)))
+  

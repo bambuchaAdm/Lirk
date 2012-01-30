@@ -5,14 +5,16 @@
 (defstruct register
   name)
 
-(defstruct big-register
-  name)
+(defstruct long-register
+  name
+  low
+  high)
 
 (defstruct label
   name)
 
-(defparameter R0 (make-register :name "R0"))
-(defparameter R1 (make-register :name "R1"))
+(defmacro deflabel (name)
+  `(defparameter ,name (make-label :name (string ',name))))
 
 (defmacro print-mnemonic (name &rest args)
   `(format *out* "~t ~a ~{~a~^, ~}~%" ,name (list ,@args)))
@@ -41,9 +43,13 @@
 (defmethod rjmp ((where label))
   (print-mnemonic "rjmp" (label-name where)))
 
+(defmethod dec ((where register))
+  (print-mnemonic "dec" (register-name where)))
+
 (defmacro main-loop (&body body)
   (let ((main-label (make-label :name "main")))
     `(progn
        (make-asm-label ,main-label)
        ,@body
        (rjmp ,main-label))))
+
