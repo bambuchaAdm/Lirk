@@ -36,6 +36,8 @@ LIRK ma za zadanie wypełnić słabe strony assemblera (wołanie procedur, czy l
     rcall czekaj
     cbi PORTA 1
 
+** Źródła
+   Przykłady z folderu avr&arm7 pochodzą z książki autorstwa Pawła Borkowskiego "AVR&ARM7 Programowanie mikrokontrolerów dla każdego" [Helion 2010]
 * TODOs
  
 *** TODO Wyczyścić projekt z duplikacji oraz drobne jego uporządkowanie.
