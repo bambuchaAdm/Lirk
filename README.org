@@ -1,0 +1,42 @@
+
+* LIRK - Lisp in AVR assebler Kernle
+
+LIRK  w przeciwieństwie do nazyw, nie jest implementacją lispa na AVR. 
+W sumie w tam małym środowisku ciężko pchnąć takie wielkie jakim jest (Common) Lisp.
+
+Lirk w zamnierzeniu miał być ćwieczeniem z Lispa. A jednak stał się czymś większym.
+Połączenie przyjemnego z porzytecznym (gdyż C na pojedynczych bitach jest niewygodne)
+LIRK ma za zadanie wypełnić słabe strony assemblera (wołanie procedur, czy logika)
+
+** Znane błędy
+*** Ładownie
+    Obecnie w wieszkości miejsc gdzie musiała nastąpić kompilacja do asma (przykłady)
+    jest wsadzone dowiązanie symboliczne.
+
+    Sądzę że użycie ASDFa powinno dać radę. Dodakowo powinno się zrobić pseudo-binrakę
+    którą będzie można odpalić z basha.
+*** Wołanie funkcji
+    Obecnie funkcje są tworzone z palca. Piszący musi mieć pełną świadomość co i jak pisze.
+    
+    Cel: LIRK zajmuje się alokacją i zarządzaniem przestrzenią programu.
+    Jednak to człowiek docelowo decuduje jak funkcja ma być wykonana (inline czy rjump).
+*** Opratory
+    Wkykorzystanie predykatów do tworzenia odpowiednich konstrukcji logicznych oraz innych.
+    
+    Obecny cel
+    (if (zerop R2)
+       (sbi PORTA 1)
+       (rcall czekaj)
+       (cbi PORTA 1))
+
+    było zamienione na 
+    cpi R2 0
+    brne 4
+    sbi PORTA 1
+    rcall czekaj
+    cbi PORTA 1
+
+* TODOs
+ 
+*** TODO Wyczyścić projekt z duplikacji oraz drobne jego uporządkowanie.
+    Dotyczy przeniesienia właściwego kodu z ./examples do ./src
