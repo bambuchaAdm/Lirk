@@ -1,5 +1,5 @@
 
-* LIRK - Lisp in AVR assebler Kernle
+* LIRK - Lisp in AVR assebler Kernel
 
 LIRK  w przeciwieństwie do nazyw, nie jest implementacją lispa na AVR. 
 W sumie w tam małym środowisku ciężko pchnąć takie wielkie jakim jest (Common) Lisp.
