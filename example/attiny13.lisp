@@ -1,4 +1,4 @@
-2(load "main.lisp")
+(load "main.lisp")
 
 (include '("tn13def.inc"))
 
@@ -106,3 +106,5 @@
 
 (defparameter ADCSRB (make-register :name "ADCSRB"))
 (defparameter DIDR0 (make-register :name "DIDR0"))
+
+(defparameter RAMEND (make-asmconst :name "RAMEND"))
