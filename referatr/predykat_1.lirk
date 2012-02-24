@@ -1,0 +1,3 @@
+(if (zerop PORTB)
+    (sbi PORTB 1)
+    (sbi PORTB 2))

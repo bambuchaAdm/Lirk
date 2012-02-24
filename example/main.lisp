@@ -19,6 +19,8 @@
 (defstruct asm-number
   expr)
 
+(defstruct interupt-vector
+
 (defmacro deflabel (name)
   `(defparameter ,name (make-label :name (string ',name))))
 
