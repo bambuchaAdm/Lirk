@@ -20,6 +20,8 @@
   expr)
 
 (defstruct interupt-vector
+  name
+  address)
 
 (defmacro deflabel (name)
   `(defparameter ,name (make-label :name (string ',name))))

@@ -1,6 +1,4 @@
-
-
-(defmacro definterupt (vector &body body))
-
-(definterupt tim0_ovf 
-    (kod kod kod))
+(defmacro definterrupt (v &body body)
+  `(defun ,v ()
+     ,@body
+     (iret)))

@@ -10,7 +10,8 @@
 \usepackage[pdftex]{graphicx}
 \usepackage{multirow}
 \usepackage{placeins}
-\usepackage{listing}
+\usepackage{listings}
+\usepackage{multicol}
 
 
 \author{Łukasz Dubiel}
@@ -43,7 +44,7 @@ Do działania Lispa faktycznie potrzebne są dwa byty. Reader i Evaluator. Pierw
 
 Daje to dość duże możliwości (przykładem jest system makr lispowych), które możemy wykorzystać by wzmocnić ekspresywność assembly. 
 
-[Prosty listing dający możliwość agregowania kodu]
+\lstinputlisting[language=Lisp]{agr.lisp}
 
 Rozwiązanie jest podobne do zagnieżdżaniu funkcji w C jednak tam się to dzieje w momencie wykonania, a Likr używa mechanizmu podczas generowania pliku wykonywalnego. Oczywistym jest, że mamy dostępny dowolny ficzer Common Lispa.
 
@@ -61,42 +62,96 @@ Na tak małej platformnie jaką jest AVR bardzo dobrze sprawuje się programowan
 Lirk z zamierzeniu ma oferować dla programisty obie te metody. Procedura może być wywołana przez skok z odłożeniem adresu powrotu na stos, jak i być rozwinięta w miejscu.
 
 funkcję można wywołać bezpośrednio w celu rozwinięciu jej w miejscu.
+\newpage
 
-[listing z rozwinięcie w miejscu]
+\begin{multicols}{2}
+\lstinputlisting[language=Lisp]{inplace.lisp}
+\columnbreak
+\lstinputlisting{inplace.asm}
+\end{multicols}
 
 albo wywołać jak wykonując skok
 
 [listing z wykonaniem w programie]
+\begin{multicols}{2}
+\lstinputlisting[language=Lisp]{jump.lisp}
+\columnbreak
+\lstinputlisting{jump.asm}
+\end{multicols}
 
 Oczywiście w tym przypadku kompilator automatycznie zarządza etykietami oraz dodanie odpowiedni fragment kodu z instrukcjami powrotu.
 
-\subsubsection{Przerwania}
+\subsection{Przerwania}
 
 Na przerwania można popatrzyć jak na specyficznie definiowane procedury. Procedury które wyzwalane są eventami generowanymi przez procesor. Wiadome jest że na samym początku przestrzeni programu znajduje się tablica wektorów przerwań.
 
 Skoro jest to specyficzna funkcja możemy sobie zdefiniować makro które ułatwi nam jej definiowanie
 
-[definicja macra]
+\lstinputlisting[language=Lisp]{macro.lisp}
+
 
 Dzięki niemu możemy definiować przerwania w następujący sposób.
 
-[definicja kilku przerwań]
+\lstinputlisting[language=Lisp]{interrupt.lisp}
 
 \subsubsection{Dalsze plany}
 
-Dodatkowo powinien w planach jest dodanie możliwości, że raz wołana funkcja jest rozwijana w miejscu, bez dodania niepotrzebnych instrukcji i etykiet. Lecz jeżeli programista wykona wołanie dwukrotnie funkcję, w assembly pojawiają się wszystkie potrzebne elementy by wykonać odpowiednie przejście.
+Dodatkowo w planach jest dodanie możliwości, że raz wołana funkcja jest rozwijana w miejscu, bez dodania niepotrzebnych instrukcji i etykiet, ale jeżeli programista wywoła procedurę powtórnie, w assembly pojawiają się wszystkie potrzebne elementy by wykonać odpowiednie przejścia.
 
-Oferuje to większą granulację kodu, oraz ułatwia testowanie jednostkowe. Nawet można się pokusić o użycie TDD [http://www.agiledata.org/essays/tdd.html] jednak wymaga to napisanie odpowiednich narzędzi (emulatorów platformy,narzędzi do budowania), które nie byłyby aż tak problematyczne (przynajmniej w podstawowej formie).
+Rozwiązanie umożliwia większą granulację kodu, oraz ułatwia testowanie jednostkowe. Nawet można się pokusić o użycie TDD [http://www.agiledata.org/essays/tdd.html] jednak wymaga to napisanie odpowiednich narzędzi (emulatorów platformy,narzędzi do budowania, framework testowy), które nie byłyby aż tak problematyczne (przynajmniej w ograniczonej formie).
 
 \subsection{Tworzenie rozgałęzień sterowania}
 Asembler oferuje kilkanaście instrukcji warunkowych. Są one w postaci predykatów. Język predykatowy jest naturalnym sposobem tworzenia warunków w językach funkcyjnych. 
 
-Widać, że kod w Common Lispie (którego składnie przyejmuje Lirk) wygląda inaczej niż analogiczny kod w C. Różniece nie są duże i bardzo łatwo je przeskoczyć. Dodatkowo podobnie jak w Pythonie a nawet bardziej kod programu przypomina (z drobnymi modyfikacjami) tekst pisany w jęyzyku naturalnym opisujący sposób działania. 
+\begin{multicols}{3}
+\lstinputlisting[language=C]{predykat_1.c}
+\columnbreak
+\lstinputlisting[language=Lisp]{predykat_1.lirk}
+\columnbreak
+\lstinputlisting{predykat_1.asm}
+\end{multicols}
 
-Utrzymywanie bardzo rozgałaziąnego kodu w assembly wymaga bardzo dużego skupienia oraz bardzo rozległego modelu mentalnego. W przypadku assembly dużo więcej jest w głowie programisty niż jest napisane.
+Widać, że kod w Common Lispie (którego składnie przyejmuje Lirk) wygląda inaczej niż analogiczny kod w C. Różniece nie są duże i bardzo łatwo je przeskoczyć. Dodatkowo podobnie jak w Pythonie a nawet bardziej kod programu przypomina (z drobnymi modyfikacjami) tekst pisany w języku naturalnym opisujący sposób działania. Jednak z racji użycia jako podstawowych funkcji assemblera jest to lekko zaciemnione. Rozwiązaniem jest dodanie aliasów do poszczególnych instrukcji. 
+
+Utrzymywanie bardzo rozgałęzionego kodu w assembly wymaga bardzo dużego skupienia oraz bardzo rozległego modelu mentalnego. W przypadku assembly dużo więcej jest w głowie programisty niż jest napisane.
 Lirk ma na celu lekkie odzielenie oraz osłabienie wymagań skupienia programisty oraz większe zgrupowania akcji powiązanych z sobą w logiczną całość.
 
-Rozwiązania oparte na predykatach (które w większości stosuje programowanie funkcyjne) bardzo dobrze mapuje się na instrukcje rozgałęzienia sterowania w kodzie.  
+Rozwiązania oparte na predykatach (które w większości stosuje programowanie funkcyjne) bardzo dobrze mapuje się na instrukcje rozgałęzienia sterowania w kodzie,
+oraz zmniejsza ryzyko popełnienie błędu przez programistę (brak drugiego znaku równości podczas porównywania)
 
+\section{Narzędzia}
+Obecnie Lirk nie posiada żadnych narzędzi, jednak w raz z rozwojem to się zmieni.
+\subsection{IDE}
+W pierwszych fazach rozwoju Lirk'a używany będzie Emacs. 
+Oczywiście trzeba napisać główny tryb działania który będzie wspomagała tworzenie w Lirku. Istnieje duża szansa na wykorzystanie trybu Lispowego jako bazy, którą trzba byłoby wzbogacić o kolorowanie mnemoników assemblera.
+
+Bardzo pomocnym trybem może okazać się auto-complete który ułatwi używanie funkcji.
+
+Jest to troszeczkę pracy, jednak dzięki temu tworzenie w liku będzie prostsze.
+\subsection{Budowanie}
+Oczywistym jest że obecnie nie mam stworzonego narzędzia do budowania dla Lirka. W tej roli wykorzystywany jest poczciwy GNU Make, który wywołuje na razie intereter lispa z odpowiednimi argumentami.
+
+Sądzę że Lirk może się pokusić o wykorzystanie własnego systemu do budowania. Powodem do jego tworzenie będzie możliwa integracja z programatorami, jak i innymi narzędziami które będą budowane dla Lirka. 
+
+Gdy korzysta się z TDD oczywistym jest że będziemy potrzebować narzędzia do tworzenia testów, jego odpalania jak i zbierania informacji.
+
+Jako środowisko do odpalania testów chciałbym wykorzystać projekt simavr jako emulatora platformy AVR. 
+Implementuje on znaczną część funkcjonalności znacznej części mikrokontrolera. Umożliwi to na ,łatwe badanie stanu rejestrów dzięki czemu wykonywanie testów jednostkowych może być dość szybie.
+
+Do procesu TDD oprócz środowiska potrzebny jest mechanizm definiowania testów. W tym miejscu potrzebna będzie biblioteka która pozwoli na łatwe definiowania stanu początkowego,
+definicja testu oraz system asercji na wartości rejestrów oraz stan pinów. Dzięki temu kod będzie można testować ze względu na jego zachowanie oraz to co robi, dzięki czemu będzie możliwe usunięcie błędnego działania zaraz po jego wprowadzaniu. Zaoszczędzi to czasu na debugowanie które jest dość trudną operacją podczas pisania w assemblerze.
+
+\subsection{Pliki specyficzne dla sprzętu}
+ W assmeblerze istnieją pliki definiujące offsety poszczególnych rejestrów oraz stałe dla konkretnego modelu mikroprocesora. By móc zapewnić polimorfizm ze względu na rejestr Lirk również musi posiadać takowy plik który zawierałby podobne dane do jego assemblerowego odpowiednika.
+ 
+Posiadanie takowego pliku jest również podyktowane tym, że gdzieś w kodzie musi następować dołączenie do kodu assembleroweogo nagłówka z dołączeniem pliku urządzenia. Tak więc plik z definicjami dla Lirka musiałby istnieć, oraz można go rozszerzyć o kilka stałych oraz rzeczy zależnych od modelu.
+
+Jest wielka szansa na to, iż w ramach jednej rodziny kod pomiędzy modelami będzie dość przenośny dzieki takiemu rozwiązaniu.
+
+\section{Podsumowanie}
+Obecnie Lirk realizuje tylko fragment z opisanego elementu. 
+Spowodowane jest to jeszcze brakiem możliwości zmiany wyjścia gdzie wypisywane są mnemoniki, ale trwają nad tym prace gdyż jest to jeden z głównych celów rozwoju. 
+
+Jedynym ograniczeniem jest tu brak czasu (zajęcia na uczelni, oraz inne projekty i zobowiązania). Jednak mimo ograniczeń Lirk powoli ale się rozwija.
 
 \end{document}
