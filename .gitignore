@@ -5,3 +5,6 @@
 *~
 *#*
 *.fasl
+*.log
+*.aux
+*.pdf
