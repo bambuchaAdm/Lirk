@@ -10,7 +10,7 @@
 (main-loop
  (cbi R2 1)
  (out PORTB R2)
- (call wait)
+ (call #'wait)
  (sbi R2 1)
  (out PORTB R2)
  (call wait))
