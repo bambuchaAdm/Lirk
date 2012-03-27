@@ -1,5 +1,10 @@
 ;;Podstawowy mechanizm 
 
+(defpackage :lirk
+  (:use :cl))
+
+(in-package :lirk)
+
 (defparameter *out* T)
 
 (defstruct register
@@ -47,7 +52,6 @@
 (defmethod cbi ((reg register)(bit integer))
   (print-mnemonic "cbi" (register-name reg) bit))
 
-
 (defmethod jmp ((where label))
   (print-mnemonic "jmp" (label-name where)))
 
@@ -90,7 +94,6 @@
 (defmethod brlo ((where integer))
   (print-mnemonic "brlo" where))
 
-
 (defmethod out ((to register) (from register))
   (print-mnemonic "out" (register-name to) (register-name from)))
 
@@ -113,6 +116,7 @@
        ,@body
        (rjmp ,main-label))))
 
+(defparameter include-list ())
 
 (defun include (args)
   (format *out* ".nolist~%~{.include \"~a\"~%~}.list~%" args))
@@ -121,7 +125,6 @@
   (format *out* ".cseg~%")
   (if org
       (format *out* ".org ~a~%" org)))
-
 
 (defmethod low ((arg asmconst))
   (make-asm-number :expr (concatenate 'string "LOW(" (asmconst-name arg) ")")))

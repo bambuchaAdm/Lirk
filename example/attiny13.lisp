@@ -1,6 +1,10 @@
-(load "main.lisp")
+(defpackage :attiny13)
 
-(include '("tn13def.inc"))
+(in-package :attiny13)
+(use-package :cl)
+(use-package :lirk)
+
+(push "tn13def.inc" 'lirk::include-list)
 
 ;;definicja rejestrow ogolnego przeznaczenia
 ;;nauczyć się robić to loop'em
@@ -109,13 +113,13 @@
 
 (defparameter RAMEND (make-asmconst :name "RAMEND"))
 
-(defparameter RESET (make-interupt-vector :name reset :address 0))
-(defparameter INT0 (make-interupt-vector :name int0 :address 1))
-(defparameter PCINT0 (make-interupt-vector :name pcint0 :address 2))
-(defparameter TIM0_OVF (make-interupt-vector :name tim0_ovf :address 3))
-(defparameter EE_RDY (make-interupt-vector :name ee_rdy :address 4))
-(defparameter ANA_COMP (make-interupt-vector :name ana_comp :address 5))
-(defparameter TIM0_COMPA (make-interupt-vector :name tim0_compa :address 6))
-(defparameter TIM0_COMPB (make-interupt-vector :name tim0_compb :address 7))
-(defparameter WDT (make-interupt-vector :name wdt :address 8))
-(defparameter ADC (make-interupt-vector :name adc :address 9))
+(defparameter RESET (make-interupt-vector :name "reset" :address 0))
+(defparameter INT0 (make-interupt-vector :name "int0" :address 1))
+(defparameter PCINT0 (make-interupt-vector :name "pcint0" :address 2))
+(defparameter TIM0_OVF (make-interupt-vector :name "tim0_ovf" :address 3))
+(defparameter EE_RDY (make-interupt-vector :name "ee_rdy" :address 4))
+(defparameter ANA_COMP (make-interupt-vector :name "ana_comp" :address 5))
+(defparameter TIM0_COMPA (make-interupt-vector :name "tim0_compa" :address 6))
+(defparameter TIM0_COMPB (make-interupt-vector :name "tim0_compb" :address 7))
+(defparameter WDT (make-interupt-vector :name "wdt" :address 8))
+(defparameter ADC (make-interupt-vector :name "adc" :address 9))
