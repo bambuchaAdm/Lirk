@@ -25,17 +25,35 @@
 
 \section{Wprowadzenie}
 
-Na platformie AVR istnieje już kilka języków mających ugruntowaną pozycję oraz zestaw narzędzi. Kilka głównych z nich to C, Bascom czy Pascal. Większość z nich to języki niezależne od platformy. Jednak mając takie ,,zabawki'' jakimi są mikrokontrolery z rodziny AVR, języki które operują na pełnych słowach stają się niewygodne. Dlatego postanowiłem spróbować innego podejścia do problemu.
+Na platformie AVR istnieje już kilka języków mających ugruntowaną pozycję oraz posiadają duży zestaw narzędzi.
+Kilka głównych z nich to C, Bascom czy Pascal.
+Większość z nich to języki niezależne od platformy.\
+Jednak mając takie ,,zabawki'' jakimi są mikrokontrolery z rodziny AVR,
+języki które operują na pełnych słowach stają się niewygodne.
+Dlatego postanowiłem spróbować innego podejścia do problemu.
 
 \subsection{Lisp}
 
-W roku 1958 John McCarthy na MIT stworzył język programowania, który został nazwany Lispem. Był to drugi, zaraz po FORTRANie język wysokiego poziomu. Przez ten czas Lisp ewoluował, jak również pojawiały się różne jego dialekty (oczywiście nie kompatybilne z sobą), aż stworzyły całą rodzinę języków. Obecnie gdy używa się słowa Lisp to mówi się o całej rodzinie języków lub o Common Lispie, dialekcie ustandaryzowanym przez ANSI w 1994 z późniejszymi modyfikacjami.
+W roku 1958 John McCarthy na MIT stworzył język programowania, który został nazwany Lispem.
+Był to drugi, zaraz po FORTRANie język wysokiego poziomu.
+Przez ten czas Lisp ewoluował, jak również pojawiały się różne jego dialekty (oczywiście nie kompatybilne z sobą), aż stworzyły całą rodzinę języków.
+Obecnie gdy używa się słowa Lisp mówi się o całej rodzinie języków lub o Common Lispie,
+dialekcie ustandaryzowanym przez ANSI w 1994 z późniejszymi modyfikacjami.
 
 \subsection{Motywacje}
 
-Z racji mojego dużego zainteresowania językami z rodziny Lispów oraz problemów jakie napotyka C w momencie, gdy trzeba operować na pojedynczych bitach, a nie słowach, zdecydowałem się na stworzenie "dialektu" Lispa na mikrokontrolery AVR. 
+Z racji mojego dużego zainteresowania językami z rodziny Lispów
+oraz problemów jakie napotyka C w momencie, gdy trzeba operować na pojedynczych bitach,
+a nie słowach, zdecydowałem się na stworzenie "dialektu" Lispa na mikrokontrolery AVR.
 
-Początkowo miało to być ćwiczenie w celu lepszego poznania Common Lispa, lecz potem zdecydowałem się, że to właśnie jego będę wykorzystywał w moich hobbystycznych projektach.
+I tak właśnie powstał języko-framework do używania assembly\footnote{Assembler to program tłumaczący assembly na opcode'y. Używane w celu usunięcia wieloznaczności}
+z poziomu Common Lispa.
+Twór ów został nazwany Lirkiem, nazwą wymyśloną podczas innego projektu,
+lecz tam niewykorzystaną. 
+
+
+Początkowo Lirk miał być ćwiczenie w celu lepszego poznania Common Lispa,
+lecz potem zdecydowałem się, że to właśnie jego będę wykorzystywał w moich hobbystycznych projektach.
 
 \section{Zamierzenia i cele}
 Wposmniany wcześniej nowy dialek, Lirk,  nie ma (na razie) ambicji stania się nowym językiem programowania. Jest on zestawem makr, funkcji oraz plików które pozwalają na pisanie w assembly z lispową składnia jako cześć wykonywalna na mikrokontrolerów. Głównym celem jest udostępnienie funkcji, które zminimalizuje ilość "niepotrzebnego" kodu w konstrukcjach stricte assemblerowych.
@@ -54,7 +72,7 @@ Jednakże nie stanowi to jakiegokolwiek problemu, gdyż w procedurze możemy zap
 
 \subsection{Definicje oraz wołanie procedur}
 
-Jednym z pierwszych problemów jakie nękały programistów była duplikacja kodu. Przeprowadzono badania wskazujące na to, że średnia ilość błędów na jednostkę kodu (KLOC czyli tysiąc linii) jest stała i zależy do wielkości projektu. Z faktu, że assembler jest jednym najmniej ekspresywnywnych języków (ilość kodu potrzebna do wykonania zamierzonej akcji jest duża) jest bardzo podatny na duplikacje.
+Jednym z pierwszych problemów jakie nękały programistów była duplikacja kodu. Przeprowadzono badania wskazujące na to, że średnia ilość błędów na jednostkę kodu (KLOC czyli tysiąc linii) jest stała i zależy do wielkości projektu. Z faktu, że assembly jest jednym najmniej ekspresywnywnych języków (ilość kodu potrzebna do wykonania zamierzonej akcji jest duża) jest bardzo podatny na duplikacje.
 
 Oprócz niskopoziomowych aspektów programowania interesuję się bardziej ogołnymi technikami jak i metodykami. Bardzo spodobał się mi manifest programowania zwinnego (ang. agile) oraz późniejszy, chociaż bardziej ważny dla programistów manifest Software Craftsmanship, , którego jednej z głównych haseł jest "Don't repeat yourself." Hasło bardzo ważne, gdyż powtarzanie kodu jest jedną z głownych przyczyn bugów. 
 
@@ -104,12 +122,18 @@ Asembler oferuje kilkanaście instrukcji warunkowych. Są one w postaci predykat
 \lstinputlisting{predykat_1.asm}
 \end{multicols}
 
-Widać, że kod w Common Lispie (, którego składnie przyejmuje Lirk) wygląda inaczej niż analogiczny kod w C. Różniece nie są duże i bardzo łatwo je przeskoczyć. Dodatkowo podobnie jak w Pythonie a nawet bardziej kod programu przypomina (z drobnymi modyfikacjami) tekst pisany w języku naturalnym opisujący sposób działania. Jednak z racji użycia jako podstawowych funkcji assemblera jest to lekko zaciemnione. Rozwiązaniem jest dodanie aliasów do poszczególnych instrukcji. 
+Widać, że kod w Common Lispie ( którego składnie przyejmuje Lirk) wygląda inaczej niż analogiczny kod w C.
+Różniece nie są duże i bardzo łatwo je przeskoczyć. Dodatkowo podobnie jak w Pythonie,
+a nawet bardziej, kod programu przypomina (z drobnymi modyfikacjami) tekst pisany w języku naturalnym, opisujący sposób działania.
+Jednak z racji użycia jako podstawowych funkcji assembly jest to lekko zaciemnione.
+Rozwiązaniem jest dodanie aliasów poszczególnych instrukcji. 
 
-Utrzymywanie bardzo rozgałęzionego kodu w assembly wymaga bardzo dużego skupienia oraz bardzo rozległego modelu mentalnego. W przypadku assembly dużo więcej jest w głowie programisty niż jest napisane.
+Utrzymywanie bardzo rozgałęzionego kodu w assembly
+wymaga bardzo dużego skupienia oraz bardzo rozległego modelu mentalnego.
+W przypadku assembly dużo więcej jest w głowie programisty niż jest napisane.
 Lirk ma na celu lekkie odzielenie oraz osłabienie wymagań skupienia programisty oraz większe zgrupowania akcji powiązanych z sobą w logiczną całość.
 
-Rozwiązania oparte na predykatach (, które w większości stosuje programowanie funkcyjne) bardzo dobrze mapuje się na instrukcje rozgałęzienia sterowania w kodzie,
+Rozwiązania oparte na predykatach, które w większości stosuje programowanie funkcyjne, bardzo dobrze mapuje się na instrukcje rozgałęzienia sterowania w kodzie,
 oraz zmniejsza ryzyko popełnienie błędu przez programistę (brak drugiego znaku równości podczas porównywania)
 
 \subsubsection{Dalsze plany}
@@ -135,7 +159,7 @@ czy innymi narzędziami takimi jak
 
 Gdy korzysta się z TDD oczywistym jest że będziemy potrzebować narzędzia do tworzenia testów, ich wykonywania jak i zbierania informacji.
 
-Jako środowisko testowe można wykorzystać projekt simavr\footnote{\url{https://gitorious.org/simavr#more}} jako emulatora platformy AVR na procesorach x86. 
+Jako środowisko testowe można wykorzystać projekt simavr\footnote{ \url{ https://gitorious.org/simavr\#more }} jako emulatora platformy AVR na procesorach x86. 
 Implementuje on znaczną część funkcjonalności znacznej dużej cześci mikrokontrolerów AVR.
 Umożliwi łatwe badanie stanu rejestrów, dzięki czemu wykonywanie testów jednostkowych stanie się możliwe oraz
 nie będzie potrzebne ładowanie programu na fizyczny mikrokontroler, który posiada ograniczoną ilość zapisów.
@@ -148,7 +172,7 @@ który pozowli na weryfikowanie czy kod dokładnie wykonuje akcje które chcemy.
 Kod będzie można dokładnie testować ze względu na jego zachowanie,
 dzięki czemu odstęp czasowy między wprowadzeniem buga do kodu,
 a zdiagnozowaniem jego istnienia oraz jego usunięciem bardzo się skraca.
-Zaoszczędzi to czasu na debugowanie, które jest trudną operacją podczas pisania w assemblerze.
+Zaoszczędzi to czasu na debugowanie, które jest trudną operacją podczas pisania w assembly.
 
 \subsection{Pliki specyficzne dla sprzętu}
 W assmeblerze istnieją pliki definiujące offsety poszczególnych rejestrów oraz stałe dla konkretnego modelu mikroprocesora.
@@ -156,9 +180,9 @@ By móc zapewnić polimorfizm ze względu na rejestr, Lirk, również musi posia
 Zawierałby podobne dane do jego assemblerowego odpowiednika lecz opakowane w CLOS\footnote{\url{http://www.dreamsongs.com/NewFiles/ECOOP.pdf}}
  
 Posiadanie takowego pliku jest również podyktowane tym, że gdzieś w programie musi następować
-dołączenie do wynikowego kodu assembleroweogo dyrektywa dołączająca plik urządzenia.
+dołączenie do wynikowego kodu assembly dyrektywa dołączająca plik urządzenia.
 Tak więc plik z definicjami dla Lirka musiałby istnieć. Można go rozszerzyć o kilka stałych oraz rzeczy zależnych od modelu.
-Uprości to towrzenie Lirka oraz usunie niepotrzebną komplikację jego.
+Uprości to towrzenie Lirka oraz usunie niepotrzebną jego komplikację .
 
 \section{Podsumowanie}
 Obecnie Lirk realizuje tylko fragment z opisanych funkcji, ale trwają nad tym prace. 
@@ -166,3 +190,23 @@ Obecnie Lirk realizuje tylko fragment z opisanych funkcji, ale trwają nad tym p
 Jedynym ograniczeniem jest tu brak czasu (zajęcia na uczelni, oraz inne projekty i zobowiązania). Jednak mimo ograniczeń, Lirk, powoli, ale się rozwija.
 
 \end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
