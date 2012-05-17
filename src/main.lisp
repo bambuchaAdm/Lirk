@@ -1,7 +1,12 @@
 ;;Podstawowy mechanizm 
 
-(defpackage :lirk
-  (:use :cl))
+(defpackage #:lirk
+  (:use :cl)
+  (:export #:make-register
+	   #:make-interrupt-vector
+	   #:make-asmconst
+	   #:make-long-register
+	   #:*include-list*))
 
 (in-package :lirk)
 
@@ -24,7 +29,7 @@
 (defstruct asm-number
   expr)
 
-(defstruct interupt-vector
+(defstruct interrupt-vector
   name
   address)
 
@@ -116,7 +121,7 @@
        ,@body
        (rjmp ,main-label))))
 
-(defparameter include-list ())
+(defparameter *include-list* ())
 
 (defun include (args)
   (format *out* ".nolist~%~{.include \"~a\"~%~}.list~%" args))
