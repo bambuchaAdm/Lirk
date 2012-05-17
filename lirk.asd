@@ -7,5 +7,5 @@
   :license "GPL"
   :pathname "src"
   :components ((:file "main")
-	       (:file "attiny13" :depends-on ("main"))))
+	       #+nil(:file "attiny13" :depends-on ("main"))))
 
