@@ -1,7 +1,10 @@
-(load "attiny13.lisp")
+(require 'lirk "../lirk.asd")
+
+(use-package 'lirk)
+(use-package 'attiny13)
 
 (defun wait()
-  (let ((lab (make-label :name (string (gensym)))))
+  (let ((lab (gen-label)))
     (ldi R16 250)
     (make-asm-label lab)
     (dec R16)
@@ -11,7 +14,6 @@
 (sbi PORTB 0)
 (sbi DDRB 1)
 (clr R2)
-(code-segment 20)
 (main-loop
  (cbi R2 1)
  (out PORTB R2)
