@@ -1,4 +1,8 @@
-(load "attiny13.lisp")
+(load "../../lirk.asd")
+(require 'lirk )
+
+(use-package 'lirk)
+(use-package 'attiny13)
 
 (code-segment 0)
 (cli)

@@ -39,9 +39,3 @@
 (ret)
   
 
-
-
-(defun gen (n)
-  (if (zerop n)
-      (gen (1- n))
-      (n)))
