@@ -9,12 +9,10 @@ Połączenie przyjemnego z porzytecznym (gdyż C na pojedynczych bitach jest nie
 LIRK ma za zadanie wypełnić słabe strony assemblera (wołanie procedur, czy logika)
 
 ** Znane błędy
-*** Ładownie
-    Obecnie w wieszkości miejsc gdzie musiała nastąpić kompilacja do asma (przykłady)
-    jest wsadzone dowiązanie symboliczne.
-
-    Sądzę że użycie ASDFa powinno dać radę. Dodakowo powinno się zrobić pseudo-binrakę
-    którą będzie można odpalić z basha.
+*** Brak binarki
+    Na obecną chwilę nie ma skryptu który biorąc na wejście nazwę pliku tworzyłby z niej plik hex.
+    Jest to kolejny ważny punkt na drodze rozwoju Lirka.
+        
 *** Wołanie funkcji
     Obecnie funkcje są tworzone z palca. Piszący musi mieć pełną świadomość co i jak pisze.
     
@@ -40,5 +38,9 @@ LIRK ma za zadanie wypełnić słabe strony assemblera (wołanie procedur, czy l
    Przykłady z folderu avr&arm7 pochodzą z książki autorstwa Pawła Borkowskiego "AVR&ARM7 Programowanie mikrokontrolerów dla każdego" [Helion 2010]
 * TODOs
  
-*** TODO Wyczyścić projekt z duplikacji oraz drobne jego uporządkowanie.
+*** DONE Wyczyścić projekt z duplikacji oraz drobne jego uporządkowanie.
     Dotyczy przeniesienia właściwego kodu z ./examples do ./src
+*** TODO Naprawić generowanie include na postawie generowanego systemu.
+    Możeliwe że każdy mikrokontroler będzie wymagał osobnego systemu w ASDF
+    Dzięki czemu będzie możliwe ich dynamiczne dobieranie i ładowanie przez implemnetacje
+*** TODO Dodanie binarki tworzącej pliki =.hex=
