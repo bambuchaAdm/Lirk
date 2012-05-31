@@ -80,7 +80,7 @@
 	   #:TIM0_COMPA
 	   #:TIM0_COMPB
 	   #:WDT
-	   #:ADC)
+	   #:ADC))
 
 (in-package :attiny13)
 
@@ -193,7 +193,7 @@
 
 (defparameter RAMEND (make-asmconst :name "RAMEND"))
 
-(defparameter RESET (make-interrupt-vector :name "reset" :address 0))
+(defparameter RESET_INT (make-interrupt-vector :name "reset" :address 0))
 (defparameter INT0 (make-interrupt-vector :name "int0" :address 1))
 (defparameter PCINT0 (make-interrupt-vector :name "pcint0" :address 2))
 (defparameter TIM0_OVF (make-interrupt-vector :name "tim0_ovf" :address 3))
