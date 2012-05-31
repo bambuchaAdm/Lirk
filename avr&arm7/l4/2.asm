@@ -1,6 +1,3 @@
-.nolist
-.include "tn13def.inc"
-.list
 .cseg
 .org 0
   cli 

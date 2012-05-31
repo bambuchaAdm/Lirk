@@ -1,6 +1,3 @@
-.nolist
-.include "tn13def.inc"
-.list
 .cseg
 .org 0
   cli 
@@ -27,3 +24,6 @@ WEW:
   cpi r20, 250
   brlo ZEW
   ret 
+
+
+
