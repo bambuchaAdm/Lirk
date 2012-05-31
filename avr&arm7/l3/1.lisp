@@ -1,6 +1,10 @@
-(load "attiny13.lisp")
+(load "../../lirk.asd")
+(require 'lirk )
 
-(code-segment 0)
+(use-package 'lirk)
+(use-package 'attiny13)
+
+(code-segment)
 (sbi DDRB 0)
 (sbi DDRB 1)
 
