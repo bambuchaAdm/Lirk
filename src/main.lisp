@@ -28,6 +28,7 @@
 	   #:brlo
 	   #:out
 	   #:clr
+	   #:cli
 	   #:rcall
 	   #:ret
 	   #:main-loop
