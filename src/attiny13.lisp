@@ -71,7 +71,7 @@
 	   #:ADCSRB
 	   #:DIDR0
 	   #:RAMEND
-	   #:RESET
+	   #:RESET_INT
 	   #:INT0
 	   #:PCINT0
 	   #:TIM0_OVF
