@@ -6,7 +6,8 @@
 	   #:make-interrupt-vector
 	   #:make-asmconst
 	   #:make-long-register
-	   #:*include-list*))
+	   #:*include-list*
+	   ))
 
 (in-package :lirk)
 
